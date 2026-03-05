@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syed Moiz Rasool | DevOps Architect</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #00ffd5;
+            --secondary: #7000ff;
+            --bg-dark: #050505;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
+
+        /* background animation canvas */
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(15px); z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-weight: 800; font-size: 1.5rem; }
+        .logo span { color: var(--primary); }
+        nav ul { display: flex; gap: 30px; list-style: none; align-items: center; }
+        nav a { color: var(--text-dim); text-decoration: none; transition: 0.3s; }
+        nav a:hover { color: var(--primary); }
+        .nav-btn { background: var(--primary); color: black !important; padding: 8px 20px; border-radius: 50px; font-weight: 700; }
+
+        header { height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 0 10%; }
+        .badge { background: rgba(0, 255, 213, 0.1); color: var(--primary); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; border: 1px solid var(--primary); margin-bottom: 20px; display: inline-block; }
+        header h1 { font-size: 5rem; line-height: 1.1; margin-bottom: 15px; }
+        .gradient-text { background: linear-gradient(90deg, #00ffd5, #7000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Typewriter Cursor */
+        .typing-container { font-size: 1.5rem; color: var(--primary); min-height: 1.6em; font-weight: 600; margin-bottom: 20px; }
+        .cursor { animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        section { padding: 120px 10%; }
+        .section-header { margin-bottom: 50px; }
+        .step-num { color: var(--primary); font-family: monospace; }
+        section h2 { font-size: 3rem; }
+
+        /* Timeline Styling */
+        .timeline { border-left: 2px solid var(--border); padding-left: 30px; margin-left: 10px; }
+        .timeline-item { position: relative; margin-bottom: 50px; }
+        .timeline-item::before { content: ''; position: absolute; left: -41px; top: 0; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 4px solid var(--bg-dark); }
+
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: var(--glass); padding: 40px; border-radius: 24px; border: 1px solid var(--border); transition: 0.4s; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 255, 213, 0.1); }
+        .card-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        .tags { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        .tags span { font-size: 0.7rem; background: var(--border); padding: 4px 10px; border-radius: 50px; color: var(--text-dim); }
+
+        /* New Contact Section */
+        .contact-box { background: linear-gradient(145deg, rgba(112, 0, 255, 0.05), rgba(0, 255, 213, 0.05)); padding: 60px; border-radius: 30px; border: 1px solid var(--border); text-align: center; }
+        .contact-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .contact-link { padding: 15px 30px; background: var(--glass); border-radius: 15px; text-decoration: none; color: white; border: 1px solid var(--border); transition: 0.3s; }
+        .contact-link:hover { background: var(--primary); color: black; border-color: var(--primary); }
+
+        footer { text-align: center; padding: 60px; border-top: 1px solid var(--border); margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<nav>
+    <div class="logo">MOIZ<span>.</span></div>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Journey</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#contact" class="nav-btn">Let's Talk</a></li>
+    </ul>
+</nav>
+
+<header id="home">
+    <div data-aos="zoom-in">
+        <span class="badge">Dec 18, 2025 Start</span>
+        <h1>Syed <span class="gradient-text">Moiz Rasool</span></h1>
+        <div class="typing-container">
+            <span class="typed-text"></span><span class="cursor">|</span>
+        </div>
+        <p style="color: var(--text-dim); max-width: 600px; margin: 0 auto 30px;">Transforming complex infrastructure into automated, scalable, and secure Cloud-native solutions.</p>
+        <div class="hero-btns">
+            <a href="#projects" class="nav-btn" style="text-decoration:none;">Explore Portfolio</a>
+            <a href="assets/Syed_Moiz_Rasool_Resume.pdf" download class="nav-btn" 
+   style="text-decoration:none; background: transparent; border: 2px solid var(--primary); color: var(--primary) !important; margin-left: 15px; display: inline-flex; align-items: center; gap: 8px; opacity: 1 !important; visibility: visible !important;">
+    <i class="fas fa-download" style="color: var(--primary) !important;"></i> 
+    <span style="color: var(--primary) !important;">Download CV</span>
+</a>
+        </div>
+    </div>
+</header>
+
+<section id="about" data-aos="fade-up">
+    <div class="section-header">
+        <span class="step-num">01</span>
+        <h2>My Journey</h2>
+    </div>
+    <div class="card" style="background: rgba(112, 0, 255, 0.02);">
+        <p style="font-size: 1.2rem; line-height: 1.8; color: var(--text-dim);">
+            I officially stepped into the world of DevOps on <span style="color: var(--primary); font-weight: bold;">December 18, 2025</span>. 
+            Since then, I've been on a fast-track mission to master automation. I started with the foundations of <span style="color: white;">Linux</span>, 
+            navigated through <span style="color: white;">Git/GitHub</span>, and mastered containerization with <span style="color: white;">Docker & Podman</span>. 
+            From setting up <span style="color: white;">Nginx</span> and file sharing (<span style="color: white;">Samba/NFS</span>) to architecting complex monitoring with <span style="color: white;">ELK, Prometheus, Grafana</span>, <span style="color: white;">& PM2</span> — every day has been a step towards excellence.
+        </p>
+    </div>
+</section>
+
+<section id="solutions" data-aos="fade-up">
+    <div class="section-header">
+        <span class="step-num">02</span>
+        <h2>Market-Ready Expertise</h2>
+    </div>
+    <div class="project-grid">
+        <div class="card" data-aos="fade-up">
+            <div class="card-icon"><i class="fab fa-aws"></i></div>
+            <h3 style="color: var(--primary);">AWS & Cloud Scaling</h3>
+            <p>Designing high-availability systems using VPC, EC2, S3, Load Balancers, and Auto-Scaling for massive traffic.</p>
+            <div class="tags"><span>VPC</span> <span>S3</span> <span>Auto-Scaling</span></div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-icon"><i class="fas fa-boxes"></i></div>
+            <h3 style="color: var(--primary);">Container Orchestration</h3>
+            <p>Deploying production-grade environments with Docker, Docker-Compose, and secure Podman setups.</p>
+            <div class="tags"><span>Docker</span> <span>Podman</span> <span>PM2</span></div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-icon"><i class="fas fa-chart-area"></i></div>
+            <h3 style="color: var(--primary);">Full-Stack Observability</h3>
+            <p>Implementing real-time data monitoring and logging using Prometheus, Grafana, Kafka, and the ELK Stack.</p>
+            <div class="tags"><span>ELK</span> <span>Grafana</span> <span>Prometheus</span></div>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
+            <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+            <h3 style="color: var(--primary);">Enterprise Networking</h3>
+            <p>Advanced networking setup with Nginx reverse proxies, Samba/NFS file sharing, and Linux kernel tuning.</p>
+            <div class="tags"><span>Nginx</span> <span>Samba</span> <span>Networking</span></div>
+        </div>
+    </div>
+</section>
+
+<section id="experience" data-aos="fade-up">
+    <div class="section-header">
+        <span class="step-num">03</span>
+        <h2>Journey Roadmap</h2>
+    </div>
+    <div class="timeline">
+        <div class="timeline-item" data-aos="fade-right">
+            <h3>Cloud & AWS Specialization</h3>
+            <p style="color: var(--primary);">Current Progress</p>
+            <p style="color: var(--text-dim); margin-top: 10px;">Mastering AWS networking, VPC architecture, and auto-scaling solutions to handle enterprise-level loads.</p>
+        </div>
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+            <h3>Infrastructure Foundation</h3>
+            <p style="color: var(--primary);">Dec 2025 - Present</p>
+            <p style="color: var(--text-dim); margin-top: 10px;">Built solid expertise in Linux, Git, Docker, Podman, Kafka, and Monitoring (ELK/Prometheus).</p>
+        </div>
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+            <h3>Future Vision</h3>
+            <p style="color: var(--secondary);">Next Steps</p>
+            <p style="color: var(--text-dim); margin-top: 10px;">Deep-diving into Kubernetes, CI/CD Pipelines, Terraform, Ansible, and Azure Cloud etc.</p>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="section-header" data-aos="fade-up">
+        <span class="step-num">04</span>
+        <h2>Featured Work</h2>
+    </div>
+    <div class="project-grid">
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>Rootless Podman</h3>
+            <p>Deploying secure, non-privileged container environments using systemd orchestration.</p>
+            <div class="tags"><span>Security</span> <span>Containers</span></div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-icon"><i class="fas fa-microchip"></i></div>
+            <h3>Kafka Monitoring</h3>
+            <p>Real-time data observability using Prometheus, Grafana, and JMX Exporter.</p>
+            <div class="tags"><span>Data</span> <span>Observability</span></div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
+            <div class="card-icon"><i class="fas fa-database"></i></div>
+            <h3>ELK Central Logging</h3>
+            <p>Aggregating petabyte-scale logs into a centralized, searchable dashboard.</p>
+            <div class="tags"><span>ELK Stack</span> <span>Logs</span></div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="400">
+            <div class="card-icon"><i class="fas fa-rocket"></i></div>
+            <h3>GitOps Pipeline</h3>
+            <p>Automated infrastructure deployment using GitHub Actions and Terraform.</p>
+            <div class="tags"><span>CI/CD</span> <span>IaC</span></div>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="500">
+    <div class="card-icon"><i class="fas fa-terminal"></i></div>
+    <h3>PM2 Process Control</h3>
+    <p>Managing production-grade application life cycles, clustering, and zero-downtime restarts.</p>
+    <div class="tags"><span>PM2</span> <span>Runtime</span></div>
+    </div>
+</section>
+
+<section id="work" data-aos="fade-up">
+    <div class="section-header">
+        <span class="step-num">05.</span>
+        <h2>Featured Projects</h2>
+    </div>
+
+    <div class="project-grid">
+        <div class="card">
+            <div class="card-icon"><i class="fab fa-docker"></i></div>
+            <h3>Automated Deployment</h3>
+            <p style="color: var(--text-dim); margin-top: 10px;">Docker aur GitHub Actions use karke CI/CD pipeline banayi jo code ko auto-deploy karti hai.</p>
+            <div class="tags">
+                <span>Docker</span>
+                <span>GitHub Actions</span>
+                <span>Nginx</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-microchip"></i></div>
+            <h3>Server Monitoring</h3>
+            <p style="color: var(--text-dim); margin-top: 10px;">Linux servers ki health track karne ke liye monitoring dashboard set up kiya.</p>
+            <div class="tags">
+                <span>Prometheus</span>
+                <span>Grafana</span>
+                <span>Linux</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+            <h3>API Load Balancing</h3>
+            <p style="color: var(--text-dim); margin-top: 10px;">High traffic handle karne ke liye Load Balancer aur Reverse Proxy set up ki.</p>
+            <div class="tags">
+                <span>Node.js</span>
+                <span>PM2</span>
+                <span>Cloud</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" data-aos="fade-up">
+    <div class="section-header">
+        <span class="step-num">05</span>
+        <h2>Contact</h2>
+    </div>
+    <div class="contact-box">
+        <h3>Have a project in mind?</h3>
+        <p style="color: var(--text-dim); margin: 15px 0 30px;">I'm currently looking for new opportunities and collaborations.</p>
+        <div class="contact-grid">
+            <a href="mailto:syedmoizrasool@email.com" class="contact-link"><i class="fas fa-envelope"></i> Email Me</a>
+            <a href="https://linkedin.com/in/syed-moiz-rasool/" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://github.com/MoizRasool" target="_blank" class="contact-link"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Syed Moiz Rasool — Nothing Is Impossible</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+
+    // 🔵 1. Typewriter Effect
+    const typedTextSpan = document.querySelector(".typed-text");
+    const textArray = ["DevOps Engineer", "Cloud Architect", "AWS & Networking", "Automation Specialist"];
+    let textArrayIndex = 0;
+    let charIndex = 0;
+
+    function type() {
+        if (charIndex < textArray[textArrayIndex].length) {
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, 100);
+        } else {
+            setTimeout(erase, 2000);
+        }
+    }
+
+    function erase() {
+        if (charIndex > 0) {
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(erase, 50);
+        } else {
+            textArrayIndex = (textArrayIndex + 1) % textArray.length;
+            setTimeout(type, 1000);
+        }
+    }
+    document.addEventListener("DOMContentLoaded", () => setTimeout(type, 1000));
+
+    // 🔵 2. Background Particles
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let particles = [];
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(0, 255, 213, 0.3)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    function init() {
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
+    }
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+    }
+    init(); animate();
+</script>
+</body>
+</html>
