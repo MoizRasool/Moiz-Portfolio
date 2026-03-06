@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Portfolio - 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #6366f1; --secondary: #a855f7; --accent: #22d3ee; --bg: #030712; --glass: rgba(15, 23, 42, 0.8); }
+        
+        /* 2026 Hyper-Speed Entrance */
+        body { 
+            background: linear-gradient(-45deg, #030712, #0f172a, #1e1b4b, #020617); 
+            background-size: 400% 400%; 
+            /* Animation speed fast kar di hai: 0.8s */
+            animation: gradientBG 15s ease infinite, hyperReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; 
+            color: #f8fafc; 
+            font-family: 'Inter', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0;
+            overflow: hidden;
+            perspective: 1000px; /* 3D effect ke liye */
+        }
+
+        @keyframes hyperReveal {
+            0% { 
+                opacity: 0; 
+                filter: blur(40px) brightness(2); /* Neon flash effect */
+                transform: scale(1.1) translateZ(200px); /* 3D Zoom */
+            }
+            100% { 
+                opacity: 1; 
+                filter: blur(0px) brightness(1); 
+                transform: scale(1) translateZ(0px); 
+            }
+        }
+
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        /* Quick Pop-in Card */
+        .auth-card { 
+            background: var(--glass); 
+            backdrop-filter: blur(25px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 40px; 
+            border-radius: 24px; 
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.1); 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center; 
+            /* Card entry thodi snappy aur bounce ke sath: 0.6s */
+            animation: float 6s ease-in-out infinite, quickPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
+        }
+
+        @keyframes quickPop {
+            from { transform: scale(0.5) translateY(100px); opacity: 0; }
+            to { transform: scale(1) translateY(0px); opacity: 1; }
+        }
+
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        
+        h1 { margin: 0 0 20px 0; background: linear-gradient(to right, var(--accent), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; font-size: 2rem; }
+        
+        input { width: 100%; box-sizing: border-box; padding: 15px; margin: 12px 0; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: white; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        input:focus { outline: none; border-color: var(--accent); background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 20px rgba(34, 211, 238, 0.2); transform: scale(1.02); }
+        
+        button { width: 100%; padding: 18px; margin-top: 20px; background: linear-gradient(90deg, var(--primary), var(--secondary)); border: none; border-radius: 12px; color: white; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.4s; letter-spacing: 1px; }
+        button:hover { letter-spacing: 3px; box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); transform: translateY(-3px); }
+        button:active { transform: scale(0.95); }
+
+        a { color: var(--accent); text-decoration: none; font-size: 0.85rem; margin-top: 20px; display: inline-block; transition: 0.3s; opacity: 0.7; }
+        a:hover { opacity: 1; text-shadow: 0 0 10px var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <h1>Sign Up</h1>
+        <input type="email" id="email" placeholder="Email Address">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="signup()">Create Account</button>
+        <a href="login.html">Already Have an Account? Login</a>
+    </div>
+    <script>
+        async function signup() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const res = await fetch('http://localhost:5000/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if(res.ok) window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

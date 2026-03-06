@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moiz Portfolio - Pro Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #00ffd5; /* Neon Green from your portfolio */
+            --secondary: #6366f1;
+            --bg: #050505;
+            --glass: rgba(15, 23, 42, 0.6);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0a111a 0%, var(--bg) 100%);
+            color: #f8fafc;
+            /* FONT UPDATED */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            animation: fadeInPage 1.2s ease-out;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1, h2 {
+            margin-bottom: 15px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: white;
+        }
+
+        /* Tech Detail Font */
+        #userStatus {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary);
+            font-size: 0.75rem;
+            background: rgba(0, 255, 213, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 16px;
+            margin: 12px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 0 20px rgba(0, 255, 213, 0.1);
+        }
+
+        /* BUTTON UPDATED: Text changed from "Commit Changes" */
+        .btn-deploy {
+            width: 100%;
+            padding: 16px;
+            margin-top: 15px;
+            background: var(--primary);
+            border: none;
+            border-radius: 14px;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-deploy:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 255, 213, 0.3);
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 10px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .btn-logout:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        ::placeholder { color: rgba(255, 255, 255, 0.3); }
+    </style>
+</head>
+<body>
+
+    <div class="welcome-card">
+        <h1>Dashboard</h1>
+        <div id="userStatus">ACCESS GRANTED // <span id="emailDisplay">MOIZ</span></div>
+        <br>
+        <button class="btn-logout" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> SIGN OUT
+        </button>
+    </div>
+
+    <div class="welcome-card" style="animation-delay: 0.2s;">
+        <h2 style="font-size: 1.2rem; text-align: left; margin-left: 5px;">Deploy New Project</h2>
+        
+        <input type="text" id="pTitle" placeholder="Project Title (e.g. AWS Cloud Setup)">
+        <textarea id="pDesc" placeholder="Project Description & Tech Stack..." rows="4"></textarea>
+        
+        <button class="btn-deploy" onclick="addProject()">
+            <i class="fas fa-rocket"></i> DEPLOY TO PORTFOLIO
+        </button>
+    </div>
+
+    <script>
+        const email = localStorage.getItem('userEmail') || "Guest@Moiz.dev";
+        document.getElementById('emailDisplay').innerText = email.split('@')[0].toUpperCase();
+
+        function logout() {
+            localStorage.removeItem('userEmail');
+            window.location.href = 'login.html';
+        }
+
+        async function addProject() {
+            const title = document.getElementById('pTitle').value;
+            const description = document.getElementById('pDesc').value;
+
+            if(!title || !description) {
+                alert("Missing Parameters: Deployment Failed");
+                return;
+            }
+
+            // Button Loading State
+            const btn = document.querySelector('.btn-deploy');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> DEPLOYING...';
+            btn.style.opacity = '0.7';
+
+            try {
+                // Yahan aapka API call aayega
+                setTimeout(() => {
+                    alert("Project Pushed to Live Environment!");
+                    btn.innerHTML = '<i class="fas fa-rocket"></i> DEPLOY TO PORTFOLIO';
+                    btn.style.opacity = '1';
+                    document.getElementById('pTitle').value = "";
+                    document.getElementById('pDesc').value = "";
+                }, 1500);
+            } catch (error) {
+                alert("Server Timeout");
+                btn.innerHTML = '<i class="fas fa-rocket"></i> DEPLOY TO PORTFOLIO';
+            }
+        }
+    </script>
+</body>
+</html>
